@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dwt;
 
 import java.awt.Color;
@@ -22,11 +17,35 @@ public class DWT {
 
     private static boolean enableCycle;
     private static int maxCycle;
+    private static String resultPath = "C:\\Users\\acer\\Documents\\NetBeansProjects\\DWT\\Hasil-DWT";
+    private static String imgPath = "C:\\Users\\acer\\Documents\\NetBeansProjects\\DWT\\img";
+    private static int index = 0;
     
     public static void main(String[] args) {
-        BufferedImage img = ReadImg("C:\\Users\\acer\\Documents\\NetBeansProjects\\DWT\\img\\reimu.jpg");
-        img = HaarWaveletTransform(img, true, 2);
-        WriteImg(img, "C:\\Users\\acer\\Documents\\NetBeansProjects\\DWT\\img\\reimu-dwt.jpg");
+        File imgFolder = new File(imgPath);
+        ScanDir(imgFolder);
+    }
+    
+    private static void ScanDir(File dir) {
+        for (File entry: dir.listFiles()) {
+            if (entry.isDirectory()) {
+                System.out.println("ENTERING FOLDER " + entry.getName());
+                ScanDir(entry);
+            } else {
+                String extension = "";
+                int i = entry.getName().lastIndexOf('.');
+                if (i >= 0) {
+                    extension = entry.getName().substring(i+1);
+                }
+                if (extension.equals("png")) {
+                    System.out.println("Scanning: " + entry.getName());
+                    BufferedImage img = ReadImg(entry.getAbsolutePath());
+                    img = HaarWaveletTransform(img, true, 1);
+                    index++;
+                    WriteImg(img, resultPath + "\\" + String.valueOf(index) + "-" + entry.getName());
+                }
+            }
+        }
     }
     
     private static BufferedImage HaarWaveletTransform(BufferedImage img, boolean enableCycle, int maxCycle) {
@@ -62,7 +81,7 @@ public class DWT {
     private static void WriteImg(BufferedImage img, String path) {
         try {
             File output = new File(path);
-            ImageIO.write(img, "jpg", output);
+            ImageIO.write(img, "png", output);
         } catch (IOException ex) {
             Logger.getLogger(DWT.class.getName()).log(Level.SEVERE, null, ex);
         }
