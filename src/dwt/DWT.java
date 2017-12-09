@@ -44,6 +44,7 @@ public class DWT {
                 if (extension.equals("png")) {
                     System.out.println("Scanning: " + entry.getName());
                     BufferedImage img = ReadImg(entry.getAbsolutePath());
+                    System.out.println("Final result: ");
                     img = HaarWaveletTransform(img, true, 1);
                     index++;
                     WriteImg(img, resultPath + "\\" + String.valueOf(index) + "-" + entry.getName());
@@ -75,13 +76,22 @@ public class DWT {
         int width = img.getWidth();
         int height = img.getHeight();
         
+        System.out.println("(");
         for (int i = 0; i < height; i++) {
+            System.out.print("(");
             for (int j = 0; j < width; j++) {
                 Color c = new Color(img.getRGB(j, i));
-                System.out.println("R:" + c.getRed() + ", G:" + c.getGreen()
-                        + ", B:" + c.getBlue());
+//                System.out.println("R:" + c.getRed() + ", G:" + c.getGreen()
+//                        + ", B:" + c.getBlue());
+                int R = c.getRed();
+                int G = c.getGreen();
+                int B = c.getBlue();
+                System.out.print((float)(R + G + B) / 3.0);
+                System.out.print(",");
             }
+            System.out.println(")");
         }
+        System.out.println(")");
     }
    
     private static BufferedImage ReadImg(String path) {
