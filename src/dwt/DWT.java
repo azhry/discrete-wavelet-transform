@@ -22,12 +22,12 @@ public class DWT {
     private static int index = 0;
     
     public static void main(String[] args) {
-        //File imgFolder = new File(imgPath); // folder Hasil-DWT
-        //ScanDir(imgFolder); // membaca seluruh citra yang telah di-DWT
+        File imgFolder = new File(imgPath); // folder Hasil-DWT
+        ScanDir(imgFolder); // membaca seluruh citra yang telah di-DWT
         
-        BufferedImage img = ReadImg("C:\\Users\\acer\\Documents"
-                + "\\NetBeansProjects\\DWT\\img\\w21\\and\\a1.png");
-        HaarWaveletTransform(img, true, 1);
+//        BufferedImage img = ReadImg("C:\\Users\\acer\\Documents"
+//                + "\\NetBeansProjects\\DWT\\img\\w21\\and\\a1.png");
+//        HaarWaveletTransform(img, true, 1);
     }
     
     private static void ScanDir(File dir) {
