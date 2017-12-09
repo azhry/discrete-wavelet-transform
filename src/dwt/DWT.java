@@ -22,8 +22,12 @@ public class DWT {
     private static int index = 0;
     
     public static void main(String[] args) {
-        File imgFolder = new File(imgPath);
-        ScanDir(imgFolder);
+        //File imgFolder = new File(imgPath); // folder Hasil-DWT
+        //ScanDir(imgFolder); // membaca seluruh citra yang telah di-DWT
+        
+        BufferedImage img = ReadImg("C:\\Users\\acer\\Documents"
+                + "\\NetBeansProjects\\DWT\\img\\w21\\and\\a1.png");
+        HaarWaveletTransform(img, true, 1);
     }
     
     private static void ScanDir(File dir) {
@@ -55,6 +59,7 @@ public class DWT {
         BufferedImage result = img;
         result = DecomposeRow(result);
         result = DecomposeColumn(result);
+        ShowImgPixels(result);
         return result;
     }
     
@@ -64,6 +69,19 @@ public class DWT {
     
     private static void SetMaxCycle(int maxCycle) {
         DWT.maxCycle = maxCycle;
+    }
+    
+    private static void ShowImgPixels(BufferedImage img) {
+        int width = img.getWidth();
+        int height = img.getHeight();
+        
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color c = new Color(img.getRGB(j, i));
+                System.out.println("R:" + c.getRed() + ", G:" + c.getGreen()
+                        + ", B:" + c.getBlue());
+            }
+        }
     }
    
     private static BufferedImage ReadImg(String path) {
